@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="sidebar" th:fragment="sidebar">
+
+    <div class="navbar-expand-md navbar-dark">
+
+        <header class="d-none d-md-block">
+            <h1><span>小白不爱</span></h1>
+        </header>
+
+        <!-- Mobile menu toggle and header -->
+        <div class="mobile-header-controls">
+            <a class="navbar-brand d-md-none d-lg-none d-xl-none" href="/"><span>小白不爱</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#SidebarContent" aria-controls="SidebarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div id="SidebarContent" class="collapse flex-column navbar-collapse">
+
+            <!-- Main navigation items -->
+            <nav class="navbar navbar-dark">
+                <div id="mainNavbar">
+                    <ul class="flex-column mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">主页 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#MenuDropdown" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">文章分类</a>
+                            <ul id="MenuDropdown" class="sub-navbar collapse flex-column">
+                                <li class="nav-item" th:each="item:${category}"><a class="nav-link" th:href="${'/?id='+item.iD}">[[${item.categoryName}]]</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#MenuDropdown1" data-toggle="collapse" aria-controls="MenuDropdown" aria-expanded="false">后台管理</a>
+                            <ul id="MenuDropdown1" class="sub-navbar collapse flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/edit}">发布</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/login}" sec:authorize="!isAuthenticated()">登录</a>
+                                    <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">注销</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="https://www.cnblogs.com/xiaobaibuai/">关于博客园</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- Sidebar search form -->
+                            <form class="form-inline sidebar-search-form my-2 my-lg-0 nav-link" action="/search" method="get">
+                                <input class="form-control mr-sm-2" type="text" size="10" name="search"  placeholder="Search" aria-label="Search">
+                                <button class="btn  my-sm-0" type="submit">搜索</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+
+
+
+            <!-- Social icons -->
+            <p class="sidebar-social-icons social-icons">
+                <a href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+                   data-content="18179144782"><i class="fa fa-weixin fa-2x"></i></a>
+                <a href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+                   data-content="1440651649"><i class="fa fa-qq fa-2x"></i></a>
+                <a href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+                   data-content="https://github.com/xiaodingfeng"><i class="fa fa-github fa-2x"></i></a>
+                <a href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+                   data-content="mrxiaodfeng@163.com"><i class="fa fa-envelope fa-2x"></i></a>
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid footer-container" th:fragment="footer">
+    <footer class="footer">
+        <div class="footer-lists">
+            <div class="row">
+                <div class="col-sm">
+                    <ul>
+                        <li><h4>友情链接</h4></li>
+                        <li><a target="_blank" href="https://www.cnblogs.com/xiaobaibuai/">博客园</a></li>
+                        <li><a target="_blank" href="https://github.com/xiaodingfeng">Github</a></li>
+                        <li><a target="_blank" href="http://www.ducker.xyz/">个人社区主页</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm">
+                    <h4>博客介绍</h4>
+                    <p>咸鱼的个人博客~~~~~~~~~~~~~~~~</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="text-center">Copyright &copy; 2020.小白不爱 All rights reserved.
+            </p>
+            <p class="text-center"><a href="#">Back to top</a></p>
+        </div>
+
+    </footer>
+    <script src="https://blog-static.cnblogs.com/files/xiaobaibuai/mouse-click.js"></script>
+    <canvas width="1777" height="841" style="position: fixed; left: 0px; top: 0px; z-index: 2147483647; pointer-events: none;"></canvas>
+    <!-- Music-->
+    <link rel="stylesheet" href="https://blog-static.cnblogs.com/files/xiaobaibuai/APlayer.min.css">
+    <script src="https://blog-static.cnblogs.com/files/xiaobaibuai/APlayer.min.js"></script>
+    <script src="https://blog-static.cnblogs.com/files/xiaobaibuai/Meting.min.js"></script>
+    <div id="player" class="aplayer aplayer-withlist aplayer-fixed" data-id="3136952023" data-server="netease" data-type="playlist" data-order="random" data-fixed="true" data-listfolded="true" data-theme="orange"></div>
+    <!-- Music end -->
+    <!--顶部加载条-->
+    <link rel="stylesheet" href="https://blog-static.cnblogs.com/files/xiaobaibuai/nprogress.css">
+    <script src="https://blog-static.cnblogs.com/files/xiaobaibuai/nprogress.js"></script>
+    <script th:src="@{/gb/js/Common.js}"></script>
+</div>
+</body>
+</html>

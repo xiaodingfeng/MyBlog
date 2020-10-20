@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head>
+        <title>主页</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Main CSS -->
+        <link  th:href="@{/gb/css/style.css}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+  
+    <body>
+        <!-- Main navigation -->
+        <div th:replace="main/common/sidebar::sidebar"></div>
+        <div id="content">
+            <div id="content-wrapper">
+
+                <!-- Jumbtron / Slider -->
+                <div class="jumbotron-wrap">
+                    <div class="container-fluid">
+                        <div id="mainCarousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item" th:classappend="${(userStat.index==0?'active':'')}" th:each="item,userStat:${textContent}">
+                                    <div class="jumbotron" >
+                                        <h1 class="text-center" th:text="${item.title}"></h1>
+                                        <p class="lead text-center">[[${#dates.format(item.time, 'yyyy-MM-dd HH:mm')}]]</p>
+                                        <p class="lead text-center">
+                                                <a class="btn btn-primary btn-lg" th:href="${'/detail?id='+item.iD}" role="button"><i class="fa fa-info"></i> &nbsp; 详情</a>
+                                            <button sec:authorize="isAuthenticated()" class="btn btn-secondary btn-lg"  role="button" th:onclick="f([[${item.iD}]])"><i class="fa fa-archive"></i> &nbsp; 删除</button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">上一张</span>
+                            </a>
+                            <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">下一张</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <main class="container-fluid">
+                    <div class="row">
+
+                        <!-- Main content -->
+                        <div class="col">
+                            <article th:each="item:${textContentAll}">
+                                <a th:href="${'/detail?id='+item.iD}"><h2 class="article-title" th:text="${item.title}"></h2></a>
+                                <p class="article-meta">发布于 <time>[[${#dates.format(item.time, 'yyyy年MM月dd日')}]]</time> by 虫虫</p>
+                                <p th:utext="${item.textContent}"></p>
+                                <a th:href="${'/detail?id='+item.iD}" class="btn btn-primary">详情</a>
+                                <button  class="btn btn-secondary" sec:authorize="isAuthenticated()" th:onclick="f([[${item.iD}]])">删除</button>
+
+                            </article>
+                            <!-- Example pagination Bootstrap component -->
+<!--                            <nav>-->
+<!--                                <ul class="pagination">-->
+<!--                                        <li class="page-item">-->
+<!--                                            <a class="page-link" href="#" aria-label="Previous">-->
+<!--                                                <span aria-hidden="true">&laquo;</span>-->
+<!--                                                <span class="sr-only">Previous</span>-->
+<!--                                            </a>-->
+<!--                                        </li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                                        <li class="page-item active"><a class="page-link" href="#">2</a></li>-->
+<!--                                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                                        <li class="page-item">-->
+<!--                                            <a class="page-link" href="#" aria-label="Next">-->
+<!--                                                <span aria-hidden="true">&raquo;</span>-->
+<!--                                                <span class="sr-only">Next</span>-->
+<!--                                            </a>-->
+<!--                                        </li>-->
+<!--                                </ul>-->
+<!--                            </nav>-->
+                        </div>
+                    </div> 
+                </main>
+
+
+                <!-- Footer -->
+                <div th:replace="main/common/sidebar::footer"></div>
+            </div>
+        </div>
+
+        <!-- Bootcamp JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script th:src="@{/assets/js/jquery.min.js}"></script>
+        <script th:src="@{/gb/js/popper.min.js}"></script>
+        <script th:src="@{/gb/js/bootstrap.min.js}"></script>
+        <script>
+            function f(id) {
+                        $.ajax({
+                            url:"/delete",
+                            data:{'id':id},
+                            type:"Post",
+                            dataType:"json",
+                            success:function(data){
+                                console.log(data);
+                                location.reload(); //删除成功后再刷新
+                            },
+                            error:function(data){
+                               alert("删除失败！")
+                            }
+                        });
+            }
+        </script>
+    <script>
+            $(function () {
+                $("[data-toggle='popover']").popover();
+            });
+    </script>
+    </body>
+</html>
+

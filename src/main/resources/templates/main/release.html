@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+        <title>发布</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+        <!-- Main CSS -->
+        <link  th:href="@{/gb/css/style.css}" rel="stylesheet">
+        <link href="style.css" th:href="@{/assets/layui/css/layui.css}" rel="stylesheet">
+        <style>
+            .w-e-text-container {
+                height: 400px !important;
+            }
+        </style>
+        <!-- Font Awesome -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+  
+    <body>
+
+         <!-- Main navigation -->
+        <div th:replace="main/common/sidebar::sidebar"></div>
+
+        <div id="content">
+            <div id="content-wrapper">
+
+                <!-- Jumbtron / Slider -->
+                <div class="jumbotron-wrap">
+                    <div class="container-fluid">
+                        <div class="jumbotron static-slider">
+                            <h1 class="text-center">发布</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <main class="container-fluid">
+                    <div class="row">
+                        <!-- Main content -->
+                        <div class="col">
+                            <form id="contactform" action="/saveContent" method="post" class="main-contact-form layui-form">
+                                <div class="layui-form-item">
+                                    <input type="text" class="layui-input" lay-verify="required" autocomplete="off" name="title" placeholder="标题 *" id="title" required  />
+                                </div>
+                                <div class="layui-form-item">
+                                    <select name="category" lay-verify="required" lay-filter="category" id="category">
+                                        <option th:value="${item.iD}" th:selected="${userStat.index==0}" th:each="item,userStat:${category}">[[${item.categoryName}]]</option>
+                                    </select>
+                                    <p id="categoryDelete" style="display: none"></p>
+                                    <button type="button" id="removeCate" class="layui-btn layui-btn-sm layui-btn-normal" style="right: 0px"><i class="layui-icon"></i>  删除类别  </button>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <input name="catenew" class="layui-input" placeholder="自定义类别(可选)">
+                                </div>
+                                <div class="layui-form-item">
+                                    <input id="contentEd" lay-verify="required" name="textContent" type="hidden" autocomplete="off">
+                                    <div id="editor" style="height:450px;">
+
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                                </div>
+                            </form>
+                        </div>        
+                    </div> 
+                </main>
+
+
+                <!-- Footer -->
+                <div th:replace="main/common/sidebar::footer"></div>
+            </div>
+        </div>
+        
+        <!-- Bootcamp JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+         <script th:src="@{/assets/js/jquery.min.js}"></script>
+         <script th:src="@{/gb/js/popper.min.js}"></script>
+         <script th:src="@{/gb/js/bootstrap.min.js}"></script>
+         <script type="text/javascript" th:src="@{/assets/layui/layui.js}"></script>
+         <script type="text/javascript" th:src="@{/assets/js/wangEditor.min.js}"></script>
+         <script type="text/javascript" th:src="@{/js/myService.js}"></script>
+    </body>
+</html>

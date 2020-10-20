@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+        <title>详情</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Main CSS -->
+        <link  th:href="@{/gb/css/style.css}" rel="stylesheet">
+
+        <!-- Font Awesome -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    </head>
+  
+    <body>
+
+        <!-- Main navigation -->
+        <div th:replace="main/common/sidebar::sidebar"></div>
+    
+        
+        <div id="content">
+            <div id="content-wrapper">
+                
+                <!-- Jumbtron / Slider -->
+                <div class="jumbotron-wrap">
+                    <div class="container-fluid">
+                        <div class="jumbotron jumbotron-narrow static-slider">
+                            <h1 class="text-center">[[${content.title}]]</h1>
+                            <p class="article-meta">发布于 <time>[[${#dates.format(content.time, 'yyyy年MM月dd日')}]]</time> by <a href="#" rel="author">虫虫</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main content area -->
+                <main class="container-fluid">
+                    <div class="row">
+
+                        <!-- Main content -->
+                        <div class="col">
+                            <p>
+                                <p th:utext="${content.textContent}"></p>
+                            </p>
+                        </div>
+                    </div> 
+                </main>
+
+
+                <!-- Footer -->
+                <div th:replace="main/common/sidebar::footer"></div>
+            </div>
+        </div>
+
+        <!-- Bootcamp JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script th:src="@{/gb/js/jquery-3.2.1.slim.min.js}"></script>
+        <script th:src="@{/gb/js/popper.min.js}"></script>
+        <script th:src="@{/gb/js/bootstrap.min.js}"></script>
+
+    </body>
+</html>
